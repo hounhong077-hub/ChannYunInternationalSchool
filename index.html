@@ -169,6 +169,7 @@
       min-height: 3em;
     }
 
+    /* Styling for both Button and Link */
     .btn {
       margin-top: 8px;
       width: 100%;
@@ -180,6 +181,8 @@
       font: inherit;
       font-size: 0.95rem;
       font-weight: 700;
+      text-align: center;
+      text-decoration: none;
       cursor: pointer;
       box-shadow: 0 2px 4px rgba(249,115,22,0.2);
       transition: background .15s ease, transform .1s ease, box-shadow .15s ease;
@@ -300,7 +303,7 @@
       <button class="btn" data-platform="android" type="button">Download as shortcut</button>
     </article>
 
-    <!-- Computer -->
+    <!-- Computer (NOW DOWNLOADS EXE) -->
     <article class="card" data-platform="desktop">
       <span class="badge" hidden>You're here</span>
       <div class="plat-icon" aria-hidden="true">
@@ -310,8 +313,9 @@
         </svg>
       </div>
       <h2>Computer</h2>
-      <p>Install as a desktop app in Chrome, Edge or Safari.</p>
-      <button class="btn" data-platform="desktop" type="button">Download as shortcut</button>
+      <p>Download the Windows installer (.exe) for CYIS.</p>
+      <!-- 🔥 Link directly to your EXE file (make sure CYIS_Setup.exe is uploaded to GitHub!) -->
+      <a href="CYIS_Setup.exe" class="btn" download>Download .EXE Installer</a>
     </article>
   </main>
 
@@ -341,10 +345,9 @@
     const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const isAndroid = /Android/.test(ua);
     
-    // Check if they are in Safari on iOS
+    // Check if they are in Safari, Chrome, or another app
+    const isChromeiOS = /CriOS/.test(ua);
     const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(ua);
-    
-    // Check if they are in an in-app browser (Facebook, Messenger, Instagram, Zalo, TikTok, etc.)
     const isInApp = /FBAN|FBAV|Instagram|Zalo|TikTok|Line/i.test(ua);
 
     const youAre = isIOS ? 'ios' : isAndroid ? 'android' : 'desktop';
@@ -357,7 +360,7 @@
       if (b) b.removeAttribute('hidden');
     }
 
-    // Capture native prompt (Android/Desktop)
+    // Capture native prompt (Android)
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -365,31 +368,45 @@
     
     window.addEventListener('appinstalled', () => { closeModal(); });
 
-    // Button handler
+    // Button handler for iOS and Android
     document.querySelectorAll('.btn[data-platform]').forEach(btn => {
       btn.addEventListener('click', () => installApp(btn.dataset.platform));
     });
 
     async function installApp(platform) {
+      
       // ── iOS LOGIC ──
       if (platform === 'ios') {
-        // If they are in Chrome, Facebook, etc. on iPhone, we must redirect them to Safari.
-        if (!isSafari || isInApp) {
-          return showInstructions('ios-wrong-browser');
+        // 1. If they are inside Facebook/Zalo/Instagram, push them to Chrome
+        if (isInApp) {
+          const currentUrl = window.location.href.replace(/^https?:\/\//, '');
+          window.location.href = 'googlechrome://' + currentUrl;
+          
+          setTimeout(() => {
+            showInstructions('ios-wrong-browser');
+          }, 1500);
+          return;
         }
-        // If they ARE in Safari, we show the steps to tap the Share button.
+
+        // 2. If they are already in Chrome on iOS
+        if (isChromeiOS) {
+          return showInstructions('ios-chrome');
+        }
+
+        // 3. If they ARE in Safari, show the official steps
         return showInstructions('ios-safari');
       }
 
-      // ── ANDROID/DESKTOP LOGIC ──
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        return; 
+      // ── ANDROID LOGIC ──
+      if (platform === 'android') {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          deferredPrompt = null;
+          return; 
+        }
+        return showInstructions('android');
       }
-
-      return showInstructions(platform);
     }
 
     // Guide UI
@@ -400,17 +417,25 @@
     const modalClose = document.getElementById('modal-close');
 
     function showInstructions(type) {
-      if (type === 'ios-wrong-browser') {
+      if (type === 'ios-chrome') {
         openModal('Open in Safari',
-          "Apple requires you to use Safari to install this app. You are currently using a different browser or app.",
+          "To install the app with the 'Open as Web App' feature, Apple requires you to use Safari. Chrome cannot install Web Apps on iPhone.",
+          [
+            'Tap the <strong>three dots (⋮)</strong> in the bottom right corner.',
+            'Tap <strong>Open in Safari</strong> (or Copy the link and paste it in Safari).',
+            'Once in Safari, tap "Download as shortcut" again.'
+          ]);
+      } else if (type === 'ios-wrong-browser') {
+        openModal('Open in Chrome or Safari',
+          "You are currently using an in-app browser (like Facebook or Zalo). You must open this page in a real browser to install it.",
           [
             'Tap the <strong>three dots (⋮)</strong> or <strong>Share icon</strong> at the top/bottom of your screen.',
-            'Tap <strong>Open in Safari</strong> (or Copy Link and paste it in Safari).',
-            'Once in Safari, tap "Download as shortcut" again.'
+            'Tap <strong>Open in Chrome</strong> (or Safari).',
+            'Once open, tap "Download as shortcut" again.'
           ]);
       } else if (type === 'ios-safari') {
         openModal('Add to Home Screen',
-          "Apple requires you to install manually. Follow these 4 quick steps:",
+          "You are in Safari. Follow these steps to install the app:",
           [
             'Tap the <strong>Share</strong> button <svg style="display:inline;width:16px;height:16px;vertical-align:middle;margin-bottom:3px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> (square with an arrow pointing up).',
             'Scroll down and tap <strong>Add to Home Screen</strong>.',
@@ -424,14 +449,6 @@
             'Tap the <strong>⋮</strong> menu in the top-right corner.',
             'Tap <strong>Install app</strong> (or <strong>Add to Home screen</strong>).',
             'Confirm the installation.'
-          ]);
-      } else {
-        openModal('Install on Computer',
-          "Use your browser's built-in install option:",
-          [
-            'In <strong>Chrome / Edge</strong>: Click the <strong>install icon</strong> in the address bar, or open the menu → <strong>Install CYIS</strong>.',
-            'In <strong>Safari (macOS Sonoma+)</strong>: Go to <strong>File → Add to Dock</strong>.',
-            'In <strong>Firefox</strong>: PWA install is not supported — bookmark this page instead.'
           ]);
       }
     }
