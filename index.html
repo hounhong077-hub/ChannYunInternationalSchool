@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- 📱 App Name -->
     <title>CYIS</title>
     
-    <!-- 🍏 iPHONE (iOS) ICON - MUST BE A DIRECT LINK TO THE PNG -->
-    <link rel="apple-touch-icon" sizes="180x180" href="https://hounhong077-hub.github.io/ChannYunInternationalSchool/icon.png">
+    <!-- 🍏 iPHONE (iOS) ICON (Crucial for Apple to show the logo) -->
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icon.png">
     
     <!-- 🤖 ANDROID ICON & PWA -->
-    <link rel="manifest" href="https://hounhong077-hub.github.io/ChannYunInternationalSchool/manifest.json">
-    <link rel="icon" type="image/png" href="https://hounhong077-hub.github.io/ChannYunInternationalSchool/icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icon.png">
     
-    <!-- Open as full screen app -->
+    <!-- Open as full screen app without Safari/Chrome search bars -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,7 +25,7 @@
     <meta name="theme-color" content="#2c7da0">
 
     <style>
-        body { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #ffffff; font-family: system-ui, sans-serif; }
+        body { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #ffffff; font-family: system-ui, -apple-system, sans-serif; }
         .logo { width: 120px; height: auto; margin-bottom: 20px; }
         .spinner { width: 30px; height: 30px; border: 4px solid #e2e8f0; border-top-color: #2c7da0; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -30,12 +34,16 @@
 </head>
 <body>
 
-    <img class="logo" src="https://hounhong077-hub.github.io/ChannYunInternationalSchool/icon.png" alt="CYIS Logo">
+    <!-- Show the logo on the screen while loading -->
+    <img class="logo" src="icon.png" alt="CYIS Logo">
     <div class="spinner"></div>
     <div class="loading-text">Opening Web App...</div>
 
     <script>
+        // 🔗 YOUR DEPLOYED GOOGLE APPS SCRIPT /exec URL
         var appUrl = "https://script.google.com/macros/s/AKfycbyGE1k0CWBfOxEUeI6_aXyzDxlcCauIFrbT3s6MfQtrxh8JBZsRCa-NJFMkhBfM0FtO/exec";
+
+        // Redirect to the web app after 0.5 seconds
         setTimeout(function() {
             window.location.replace(appUrl);
         }, 500);
