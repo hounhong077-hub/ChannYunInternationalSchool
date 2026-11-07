@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- 🏫 SCHOOL LOGO FOR HOME SCREEN / APP ICON -->
-    <!-- iOS (Apple) Home Screen Icon -->
+    <!-- 📱 For Android (Connects to manifest.json) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a73e8">
+    
+    <!-- 🍏 For iOS (Apple iPhone/iPad) -->
     <link rel="apple-touch-icon" sizes="180x180" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR9cK7_BjbUQ4THtiR6iLjRdc3TN7o8kTPD7k91b70ixGvhTAdEYFVOnoN1TlSB2LZEX_PNoBOKDOyYtg94vVlATxh7jpWk6ngIY45Ym4S7RzwvnrEyWDDeGX5DkDqfIDCqmXcOEqjZ0x-9xaWyLZ3XOGWeb-I7mc7s93BDsynlqGNuEBRVY0zfg6akWg/s1111/CYIS%20Png.png">
-    <!-- Android / Browser Tab Icon -->
-    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR9cK7_BjbUQ4THtiR6iLjRdc3TN7o8kTPD7k91b70ixGvhTAdEYFVOnoN1TlSB2LZEX_PNoBOKDOyYtg94vVlATxh7jpWk6ngIY45Ym4S7RzwvnrEyWDDeGX5DkDqfIDCqmXcOEqjZ0x-9xaWyLZ3XOGWeb-I7mc7s93BDsynlqGNuEBRVY0zfg6akWg/s1111/CYIS%20Png.png">
-
-    <!-- Allows the app to open full-screen on iOS and Android -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CYIS">
 
     <title>Chann Yun International School</title>
     
@@ -28,34 +27,23 @@
             background-color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
-        .logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-        .loading {
-            color: #666;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
+        .logo { width: 150px; height: auto; margin-bottom: 20px; }
+        .loading { color: #666; font-size: 1.1rem; font-weight: 500; }
     </style>
 </head>
 <body>
 
-    <!-- Show the logo while loading -->
     <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR9cK7_BjbUQ4THtiR6iLjRdc3TN7o8kTPD7k91b70ixGvhTAdEYFVOnoN1TlSB2LZEX_PNoBOKDOyYtg94vVlATxh7jpWk6ngIY45Ym4S7RzwvnrEyWDDeGX5DkDqfIDCqmXcOEqjZ0x-9xaWyLZ3XOGWeb-I7mc7s93BDsynlqGNuEBRVY0zfg6akWg/s1111/CYIS%20Png.png" alt="School Logo">
-    
     <div class="loading">Opening Web App...</div>
 
     <script>
-        // 🔗 YOUR GOOGLE APPS SCRIPT WEB APP URL
+        // Your Google Apps Script URL
         var appUrl = "https://script.google.com/macros/s/AKfycbyGE1k0CWBfOxEUeI6_aXyzDxlcCauIFrbT3s6MfQtrxh8JBZsRCa-NJFMkhBfM0FtO/exec";
 
-        // Wait half a second (so they see the logo), then redirect automatically
+        // Instantly redirect to the web app after showing the logo briefly
         setTimeout(function() {
-            // window.location.replace means they can't click "Back" to get stuck on this page
             window.location.replace(appUrl);
-        }, 500);
+        }, 300);
     </script>
 </body>
 </html>
