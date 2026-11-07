@@ -324,7 +324,7 @@
     Or <a href="https://script.google.com/macros/s/AKfycbyGE1k0CWBfOxEUeI6_aXyzDxlcCauIFrbT3s6MfQtrxh8JBZsRCa-NJFMkhBfM0FtO/exec">open the web app right now →</a>
   </p>
 
-  <!-- 📖 Installation Guide Modal (Fallback) -->
+  <!-- 📖 Installation Guide Modal (This pops up when clicking iOS) -->
   <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
     <div class="modal">
       <h3 id="modal-title">Install CYIS</h3>
@@ -353,7 +353,7 @@
       if (b) b.removeAttribute('hidden');
     }
 
-    // Capture the native installation prompt
+    // Capture the native installation prompt (Android/Desktop)
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -368,7 +368,7 @@
 
     // Bring user directly to installation
     async function installApp(platform) {
-      // 1. iOS strictly blocks auto-installs. Show the guide immediately.
+      // 1. iOS strictly blocks auto-installs. We open the Add to Home Screen guide immediately.
       if (platform === 'ios') return showInstructions('ios');
 
       // 2. Android / Desktop: Trigger the native install prompt instantly
@@ -392,11 +392,11 @@
 
     function showInstructions(platform) {
       if (platform === 'ios') {
-        openModal('Install on iPhone / iPad',
-          "Apple requires you to install shortcuts manually. Follow these steps:",
+        openModal('Add to Home Screen',
+          "Apple requires you to install shortcuts manually. Follow these 4 quick steps:",
           [
             'Open this page in <strong>Safari</strong> (Chrome on iPhone cannot install PWAs).',
-            'Tap the <strong>Share</strong> button (square with an arrow).',
+            'Tap the <strong>Share</strong> button (square with an arrow pointing up).',
             'Scroll down and tap <strong>Add to Home Screen</strong>.',
             'Tap <strong>Add</strong> in the top-right corner.'
           ]);
@@ -413,7 +413,7 @@
         openModal('Install on Computer',
           "Use your browser's built-in install option:",
           [
-            'In <strong>Chrome / Edge</strong>: Click the <strong>install icon</strong> in the address bar (a small monitor with a down arrow), or open the menu → <strong>Install CYIS</strong>.',
+            'In <strong>Chrome / Edge</strong>: Click the <strong>install icon</strong> in the address bar, or open the menu → <strong>Install CYIS</strong>.',
             'In <strong>Safari (macOS Sonoma+)</strong>: Go to <strong>File → Add to Dock</strong>.',
             'In <strong>Firefox</strong>: PWA install is not supported — bookmark this page instead.'
           ]);
@@ -439,7 +439,7 @@
       if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
     });
 
-    // Register Service Worker (Crucial for the native install prompt)
+    // Register Service Worker (Crucial for the native install prompt on Android)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js').catch(() => {});
