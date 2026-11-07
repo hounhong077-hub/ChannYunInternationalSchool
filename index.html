@@ -7,22 +7,19 @@
     <!-- 📱 App Name -->
     <title>CYIS</title>
     
-    <!-- 🍏 iPHONE (iOS) ICON (Crucial for Apple to show the logo) -->
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="icon.png">
+    <!-- 🍏 iPHONE (iOS) ICON - Using your exact image link -->
+    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR9cK7_BjbUQ4THtiR6iLjRdc3TN7o8kTPD7k91b70ixGvhTAdEYFVOnoN1TlSB2LZEX_PNoBOKDOyYtg94vVlATxh7jpWk6ngIY45Ym4S7RzwvnrEyWDDeGX5DkDqfIDCqmXcOEqjZ0x-9xaWyLZ3XOGWeb-I7mc7s93BDsynlqGNuEBRVY0zfg6akWg/s1111/CYIS%20Png.png">
     
     <!-- 🤖 ANDROID ICON & PWA -->
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR9cK7_BjbUQ4THtiR6iLjRdc3TN7o8kTPD7k91b70ixGvhTAdEYFVOnoN1TlSB2LZEX_PNoBOKDOyYtg94vVlATxh7jpWk6ngIY45Ym4S7RzwvnrEyWDDeGX5DkDqfIDCqmXcOEqjZ0x-9xaWyLZ3XOGWeb-I7mc7s93BDsynlqGNuEBRVY0zfg6akWg/s1111/CYIS%20Png.png">
     
-    <!-- Open as full screen app without Safari/Chrome search bars -->
+    <!-- Open as full screen app -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CYIS">
-    <meta name="theme-color" content="#2c7da0">
+    <meta name="theme-color" content="#ffffff">
 
     <style>
         body { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #ffffff; font-family: system-ui, -apple-system, sans-serif; }
@@ -35,15 +32,15 @@
 <body>
 
     <!-- Show the logo on the screen while loading -->
-    <img class="logo" src="icon.png" alt="CYIS Logo">
+    <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR9cK7_BjbUQ4THtiR6iLjRdc3TN7o8kTPD7k91b70ixGvhTAdEYFVOnoN1TlSB2LZEX_PNoBOKDOyYtg94vVlATxh7jpWk6ngIY45Ym4S7RzwvnrEyWDDeGX5DkDqfIDCqmXcOEqjZ0x-9xaWyLZ3XOGWeb-I7mc7s93BDsynlqGNuEBRVY0zfg6akWg/s1111/CYIS%20Png.png" alt="CYIS Logo">
     <div class="spinner"></div>
     <div class="loading-text">Opening Web App...</div>
 
     <script>
-        // 🔗 YOUR DEPLOYED GOOGLE APPS SCRIPT /exec URL
+        // 🔗 YOUR GOOGLE APPS SCRIPT /exec URL
         var appUrl = "https://script.google.com/macros/s/AKfycbyGE1k0CWBfOxEUeI6_aXyzDxlcCauIFrbT3s6MfQtrxh8JBZsRCa-NJFMkhBfM0FtO/exec";
 
-        // Redirect to the web app after 0.5 seconds
+        // Redirect to the web app
         setTimeout(function() {
             window.location.replace(appUrl);
         }, 500);
